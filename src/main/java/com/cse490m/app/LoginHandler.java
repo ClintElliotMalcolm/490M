@@ -1,6 +1,5 @@
 package com.cse490m.app;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -16,7 +15,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
-import com.mongodb.util.JSON;
 
 public class LoginHandler extends AbstractHandler {
 
@@ -42,14 +40,7 @@ public class LoginHandler extends AbstractHandler {
       response.setStatus(HttpServletResponse.SC_OK);
       baseRequest.setHandled(true);
       
-      StringBuffer jb = new StringBuffer();
-      String line = null;
-      BufferedReader reader = request.getReader();
-      while ((line = reader.readLine()) != null)
-        jb.append(line);
-      
-      System.out.println("json data: " + jb.toString());
-      DBObject user = (DBObject) JSON.parse(jb.toString());
+      DBObject user = new BasicDBObject("name", request.getParameter("username"));
       
       DBObject newTimes = new BasicDBObject("$push", new BasicDBObject("times", new Date().toString()));
       
