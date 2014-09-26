@@ -1,6 +1,7 @@
 package com.cse490m.app;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,12 +16,17 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
 public class LoginHandler extends AbstractHandler {
+
+  public static MongoClient CLIENT;
   
-  public final MongoClient client;
-  
-  public LoginHandler(MongoClient client) {
-	  super();
-	  this.client = client;
+  public LoginHandler() {
+	  if (CLIENT == null) {
+		  try {
+			  CLIENT = new MongoClient();
+		  } catch (UnknownHostException e) {
+			  throw new RuntimeException(e);
+		  }
+	  }
   }
 	
 	
@@ -35,9 +41,9 @@ public class LoginHandler extends AbstractHandler {
       String password = request.getParameter("password");
       
       DBObject user = new BasicDBObject("name", name).append("password", password);
-      DBObject newTimes = new BasicDBObject("times", new BasicDBObject("$push", System.currentTimeMillis()));
+      DBObject newTimes = new BasicDBObject("$push", new BasicDBObject("times", System.currentTimeMillis()));
       
-      DBCollection col = client.getDB("490m").getCollection("users");
+      DBCollection col = CLIENT.getDB("490m").getCollection("users");
       col.update(user, newTimes, true, false);
       
       response.setContentType("text/x-son;charset=UTF-8");
