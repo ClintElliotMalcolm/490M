@@ -15,6 +15,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
 public class LoginHandler extends AbstractHandler {
+  
   public final MongoClient client;
   
   public LoginHandler(MongoClient client) {
