@@ -2,6 +2,7 @@ package com.cse490m.app;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +43,7 @@ public class LoginHandler extends AbstractHandler {
       String name = request.getReader().readLine();
       
       DBObject user = new BasicDBObject("name", name);
-      DBObject newTimes = new BasicDBObject("$push", new BasicDBObject("times", System.currentTimeMillis()));
+      DBObject newTimes = new BasicDBObject("$push", new BasicDBObject("times", new Date().toString()));
       
       DBCollection col = CLIENT.getDB("490m").getCollection("users");
       col.update(user, newTimes, true, false);
