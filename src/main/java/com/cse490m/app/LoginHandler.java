@@ -39,10 +39,9 @@ public class LoginHandler extends AbstractHandler {
       response.setStatus(HttpServletResponse.SC_OK);
       baseRequest.setHandled(true);
       
-      String name = request.getParameter("name");
-      String password = request.getParameter("password");
+      String name = request.getReader().readLine();
       
-      DBObject user = new BasicDBObject("name", name).append("password", password);
+      DBObject user = new BasicDBObject("name", name);
       DBObject newTimes = new BasicDBObject("$push", new BasicDBObject("times", System.currentTimeMillis()));
       
       DBCollection col = CLIENT.getDB("490m").getCollection("users");
