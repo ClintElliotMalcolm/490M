@@ -8,8 +8,4 @@
     <servlet-name>App</servlet-name>
     <servlet-class>org.cse490m.app</servlet-class>
   </servlet>
-  <servlet-mapping>
-    <servlet-name>App</servlet-name>
-    <url-pattern>/*</url-pattern>
-  </servlet-mapping>
 </web-app>
