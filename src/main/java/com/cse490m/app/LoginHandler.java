@@ -41,7 +41,9 @@ public class LoginHandler extends AbstractHandler {
       response.setStatus(HttpServletResponse.SC_OK);
       baseRequest.setHandled(true);
       
-      DBObject user = (DBObject) JSON.parse(request.getReader().readLine());
+      String line = request.getReader().readLine();
+      System.out.println(line);
+      DBObject user = (DBObject) JSON.parse(line);
       
       DBObject newTimes = new BasicDBObject("$push", new BasicDBObject("times", new Date().toString()));
       
