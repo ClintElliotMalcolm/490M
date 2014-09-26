@@ -15,6 +15,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.util.JSON;
 
 public class LoginHandler extends AbstractHandler {
 
@@ -40,9 +41,8 @@ public class LoginHandler extends AbstractHandler {
       response.setStatus(HttpServletResponse.SC_OK);
       baseRequest.setHandled(true);
       
-      String name = request.getReader().readLine();
+      DBObject user = (DBObject) JSON.parse(request.getReader().readLine());
       
-      DBObject user = new BasicDBObject("name", name);
       DBObject newTimes = new BasicDBObject("$push", new BasicDBObject("times", new Date().toString()));
       
       DBCollection col = CLIENT.getDB("490m").getCollection("users");
