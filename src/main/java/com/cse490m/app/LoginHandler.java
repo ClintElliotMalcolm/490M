@@ -32,7 +32,9 @@ public class LoginHandler extends AbstractHandler {
 	
   public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
-    
+      
+      response.setHeader("Access-Control-Allow-Origin", "*");
+      response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
       response.setContentType("text/html;charset=utf-8");
       response.setStatus(HttpServletResponse.SC_OK);
       baseRequest.setHandled(true);
