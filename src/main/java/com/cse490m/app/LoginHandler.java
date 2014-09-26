@@ -1,5 +1,6 @@
 package com.cse490m.app;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -41,9 +42,14 @@ public class LoginHandler extends AbstractHandler {
       response.setStatus(HttpServletResponse.SC_OK);
       baseRequest.setHandled(true);
       
-      String line = request.getReader().readLine();
-      System.out.println(line);
-      DBObject user = (DBObject) JSON.parse(line);
+      StringBuffer jb = new StringBuffer();
+      String line = null;
+      BufferedReader reader = request.getReader();
+      while ((line = reader.readLine()) != null)
+        jb.append(line);
+      
+      System.out.println("json data: " + jb.toString());
+      DBObject user = (DBObject) JSON.parse(jb.toString());
       
       DBObject newTimes = new BasicDBObject("$push", new BasicDBObject("times", new Date().toString()));
       
